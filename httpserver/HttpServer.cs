@@ -30,7 +30,8 @@ namespace httpserver
             string answer = "";
             //while (message != null && message != "")
             //{
-                Console.WriteLine("Client: " +message);
+                //Console.WriteLine("Client: " + message);
+                Console.WriteLine("Http/1.0 200 OK");
                 answer = "Hello World!";
                 sw.WriteLine(answer);
                 message = sr.ReadLine();
