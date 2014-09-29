@@ -28,14 +28,16 @@ namespace httpserver
 
             string message = sr.ReadLine();
             string answer = "";
-            //while (message != null && message != "")
-            //{
-                //Console.WriteLine("Client: " + message);
-                Console.WriteLine("Http/1.0 200 OK");
-                answer = "Hello World!";
+
+            string[] words = message.Split(' ');
+            foreach (string word in words)
+            {
+                Console.WriteLine(word);
+            }
+                answer = "<html><body>HTTP/1.0 200 OK</html></body>";
                 sw.WriteLine(answer);
                 message = sr.ReadLine();
-            //}
+            
 
             ns.Close();
             goTcpClient.Close();
