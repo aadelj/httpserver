@@ -13,6 +13,23 @@ namespace httpserver
     {
         public static readonly int DefaultPort = 8888;
 
+        private static readonly string RootCatalog = @"c:/temp";
+
+        //public void CopyTo(Stream RootCatalog)
+        //{
+
+        //    MemoryStream destination = new MemoryStream();
+
+        //    using (FileStream source = File.Open(@"c:/temp/adel.txt", FileMode.Open, FileAccess.Read))
+        //    {
+        //        Console.WriteLine("Source Length: {0}", source.Length.ToString());
+
+        //        source.CopyTo(destination);
+        //    }
+        //    Console.WriteLine("Destination length: {0}", destination.Length.ToString());
+        //}
+        
+
         public void StartServer()
         {
             TcpListener goListener = new TcpListener(DefaultPort);
@@ -34,9 +51,12 @@ namespace httpserver
             {
                 Console.WriteLine(word);
             }
-                answer = "<html><body>HTTP/1.0 200 OK</html></body>";
-                sw.WriteLine(answer);
-                message = sr.ReadLine();
+            FileStream source = File.Open(@"c:/temp/httpass.htm", FileMode.Open, FileAccess.Read);
+            source.CopyTo(sw.BaseStream);
+            source.Flush();
+                //answer = "<html><body>HTTP/1.0 200 OK</html></body>";
+                //sw.WriteLine(answer);
+                //message = sr.ReadLine();
             
 
             ns.Close();
