@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.IO;
 using System.Net.Sockets;
@@ -15,21 +16,7 @@ namespace httpserver
 
         private static readonly string RootCatalog = @"c:/temp";
 
-        //public void CopyTo(Stream RootCatalog)
-        //{
-
-        //    MemoryStream destination = new MemoryStream();
-
-        //    using (FileStream source = File.Open(@"c:/temp/adel.txt", FileMode.Open, FileAccess.Read))
-        //    {
-        //        Console.WriteLine("Source Length: {0}", source.Length.ToString());
-
-        //        source.CopyTo(destination);
-        //    }
-        //    Console.WriteLine("Destination length: {0}", destination.Length.ToString());
-        //}
-        
-
+       
         public void StartServer()
         {
             TcpListener goListener = new TcpListener(DefaultPort);
@@ -51,13 +38,28 @@ namespace httpserver
             {
                 Console.WriteLine(word);
             }
-            FileStream source = File.Open(@"c:/temp/httpass.htm", FileMode.Open, FileAccess.Read);
-            source.CopyTo(sw.BaseStream);
-            source.Flush();
-                //answer = "<html><body>HTTP/1.0 200 OK</html></body>";
-                //sw.WriteLine(answer);
-                //message = sr.ReadLine();
-            
+            string temp = RootCatalog + words[1];
+            FileInfo fi = new FileInfo(temp);
+            if (fi.Exists)
+            {
+                FileStream source = File.Open(RootCatalog + words[1], FileMode.Open, FileAccess.Read);
+
+                source.CopyTo(sw.BaseStream);
+                source.Flush();
+            }
+            else
+            {
+                sw.WriteLine(message);
+            }
+
+            //FileStream source = File.Open(RootCatalog + words[1], FileMode.Open, FileAccess.Read);
+
+            //source.CopyTo(sw.BaseStream);
+            //source.Flush();
+            answer = "HTTP//1.0 200 OK";
+            sw.WriteLine(answer);
+            message = sr.ReadLine();
+                
 
             ns.Close();
             goTcpClient.Close();
