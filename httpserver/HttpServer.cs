@@ -16,8 +16,7 @@ namespace httpserver
 
         private static readonly string RootCatalog = @"c:/temp";
 
-       
-        public void StartServer()
+       public void StartServer()
         {
             TcpListener goListener = new TcpListener(DefaultPort);
             goListener.Start();
@@ -43,24 +42,19 @@ namespace httpserver
             if (fi.Exists)
             {
                 FileStream source = File.Open(RootCatalog + words[1], FileMode.Open, FileAccess.Read);
-
                 source.CopyTo(sw.BaseStream);
                 source.Flush();
             }
             else
             {
                 sw.WriteLine(message);
+                answer = "HTTP//1.0 200 OK";
+                sw.WriteLine(answer);
+                message = sr.ReadLine();
             }
-
-            //FileStream source = File.Open(RootCatalog + words[1], FileMode.Open, FileAccess.Read);
-
-            //source.CopyTo(sw.BaseStream);
-            //source.Flush();
-            answer = "HTTP//1.0 200 OK";
-            sw.WriteLine(answer);
-            message = sr.ReadLine();
+           
+            
                 
-
             ns.Close();
             goTcpClient.Close();
             goListener.Stop();
