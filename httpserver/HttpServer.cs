@@ -37,24 +37,25 @@ namespace httpserver
             {
                 Console.WriteLine(word);
             }
+
             string temp = RootCatalog + words[1];
             FileInfo fi = new FileInfo(temp);
             if (fi.Exists)
             {
+                answer = "HTTP/1.0 200 OK\r\n\r\n";
+                sw.Write(answer);
+                message = sr.ReadLine();
                 FileStream source = File.Open(RootCatalog + words[1], FileMode.Open, FileAccess.Read);
                 source.CopyTo(sw.BaseStream);
                 source.Flush();
             }
             else
             {
-                sw.WriteLine(message);
-                answer = "HTTP//1.0 200 OK";
+                answer = "HTTP//1.0 404 Not Found\r\n\r\n";
                 sw.WriteLine(answer);
                 message = sr.ReadLine();
             }
            
-            
-                
             ns.Close();
             goTcpClient.Close();
             goListener.Stop();
