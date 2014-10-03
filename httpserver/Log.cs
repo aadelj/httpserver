@@ -9,6 +9,10 @@ namespace httpserver
 {
     class Log
     {
+        /// <summary>
+        /// This is our Logging class. Which logs the servers actions.
+        /// </summary>
+        /// <param name="LogInfo"></param>
         public static void WriteInfo(string LogInfo)
         {
             string sSource;
