@@ -22,11 +22,11 @@ namespace httpserver
         {
             serverOn = true;
 
+            TcpListener goListener = new TcpListener(DefaultPort);
+            goListener.Start();
+
             while (serverOn)
             {
-                TcpListener goListener = new TcpListener(DefaultPort);
-                goListener.Start();
-
                 TcpClient goTcpClient = goListener.AcceptTcpClient();
                 Console.WriteLine("Server Activated");
 
@@ -49,11 +49,10 @@ namespace httpserver
                     if (!File.Exists(filePath))
                     {
                         sw.Write("HTTP/1.0 404 Not Found\r\n\r\n");
+                        message = sr.ReadLine();
                     }
                     else
                     {
-                        //FileInfo fi = new FileInfo(filePath);
-
                         answer = "HTTP/1.0 200 OK\r\n\r\n";
                         sw.WriteLine(answer);
                         message = sr.ReadLine();
@@ -68,15 +67,16 @@ namespace httpserver
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Unidentified Error");
+                    Console.WriteLine("Unidentified Error - HTTP/1.0 404 Not Found");
                 }
                 finally
                 {
                     ns.Close();
                     goTcpClient.Close();
-                    goListener.Stop();
+                    
                 }
             }
+            goListener.Stop();
         }
     }
 }
