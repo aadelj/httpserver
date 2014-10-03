@@ -65,12 +65,14 @@ namespace httpserver
                     answer = "HTTP/1.0 200 OK\r\n\r\n";
                     sw.WriteLine(answer);
                     message = sr.ReadLine();
+                    Log.WriteInfo("File requested - Sending" + filePath);
                     using (FileStream source = File.Open(filePath, FileMode.Open, FileAccess.Read))
                     {
                         source.CopyTo(sw.BaseStream);
                         source.Flush();
                     }
                     Console.WriteLine(message);
+                    Log.WriteInfo("Server got the file! " + filePath);
 
                 }
                 sr.Close();
@@ -84,9 +86,13 @@ namespace httpserver
             {
                 ns.Close();
                 goTcpClient.Close();
-
             }
         }
 
+        public void StopServer()
+        {
+            serverOn = false;
+            Log.WriteInfo("Server shutting down!");
+        }
     }
 }

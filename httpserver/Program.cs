@@ -10,7 +10,9 @@ namespace httpserver
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello http server");
+            Console.WriteLine("Server Started");
+
+            Log.WriteInfo("Server Started");
 
             HttpServer server = new HttpServer();
             server.StartServer();
